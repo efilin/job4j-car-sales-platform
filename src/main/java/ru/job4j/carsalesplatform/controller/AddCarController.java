@@ -3,9 +3,12 @@ package ru.job4j.carsalesplatform.controller;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.job4j.carsalesplatform.model.Seller;
@@ -34,10 +37,11 @@ public class AddCarController {
     }
 
     @PostMapping("/add")
-    public String addCar(@ModelAttribute("photoFile") MultipartFile photoFile,
+    public String addCar(@Nullable @ModelAttribute("photoFile") MultipartFile photoFile,
                          @ModelAttribute("car") SellingCar car,
                          Authentication authentication) throws IOException {
-        if (!photoFile.isEmpty()) {
+
+        if (photoFile != null && !photoFile.isEmpty()) {
             String uploadString = System.getProperty("java.io.tmpdir") + File.separator + "photo";
             String extension = FilenameUtils.getExtension(photoFile.getOriginalFilename());
             String fileName = String.format("photo-%s.%s", String.valueOf(System.currentTimeMillis()), extension);
@@ -48,6 +52,7 @@ public class AddCarController {
             Files.write(path, photoFile.getBytes());
             car.setPhoto(path.toString());
         }
+
 
         car.setOnSale(true);
         car.setCreated(new Timestamp(System.currentTimeMillis()));

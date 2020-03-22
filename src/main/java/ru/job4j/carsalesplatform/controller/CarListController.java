@@ -3,9 +3,11 @@ package ru.job4j.carsalesplatform.controller;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.carsalesplatform.model.Seller;
 import ru.job4j.carsalesplatform.model.SellingCar;
 import ru.job4j.carsalesplatform.service.ValidateSellingCar;
 
@@ -46,6 +48,24 @@ public class CarListController {
         return result;
     }
 
+    @PostMapping("/update")
+    public String updateCars(@ModelAttribute("carId") Integer carId,
+                             Authentication authentication,
+                             Model model) {
+        SellingCar car = validateSellingCar.findCarById(carId);
+        Seller seller = car.getSeller();
+
+        String username = authentication.getName();
+        if (seller.getUsername().equals(username)) {
+            validateSellingCar.changeSaleStatus(carId);
+            model.addAttribute("carUpdate", "Car status is changed");
+        } else {
+            model.addAttribute("error", "Not enough rights");
+        }
+        model.addAttribute("allCars", validateSellingCar.findAllCars());
+        return "CarsView";
+    }
+
     @GetMapping("/manufacturer")
     public @ResponseBody
     List<String> getManufacturer() {
@@ -62,8 +82,15 @@ public class CarListController {
     public @ResponseBody
     byte[] getPhoto(@RequestParam Integer carId) throws IOException {
         SellingCar sellingCar = validateSellingCar.findCarById(carId);
-        String photo = sellingCar.getPhoto();
-        InputStream in = new FileInputStream(photo);
-        return IOUtils.toByteArray(in);
+        byte[] result;
+        if (sellingCar.getPhoto() == null) {
+            InputStream in = getClass().getClassLoader().getResourceAsStream("NoPhoto.png");
+            result = IOUtils.toByteArray(in);
+        } else {
+            String photo = sellingCar.getPhoto();
+            InputStream in = new FileInputStream(photo);
+            result = IOUtils.toByteArray(in);
+        }
+        return result;
     }
 }
