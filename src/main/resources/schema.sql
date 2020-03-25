@@ -1,4 +1,4 @@
-CREATE TABLE seller (
+CREATE TABLE IF NOT EXISTS seller (
   id       serial PRIMARY KEY,
   name     VARCHAR(2000),
   username VARCHAR(2000),
@@ -8,7 +8,7 @@ CREATE TABLE seller (
   active   BOOLEAN
 );
 
-CREATE TABLE s_car (
+CREATE TABLE IF NOT EXISTS s_car (
   id              serial PRIMARY KEY,
   manufacturer    VARCHAR(100),
   model           VARCHAR(100),

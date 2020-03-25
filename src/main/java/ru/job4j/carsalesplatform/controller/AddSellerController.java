@@ -28,6 +28,10 @@ public class AddSellerController {
     @PostMapping("/addseller")
     public String addSeller(@ModelAttribute("seller") Seller seller,
                             Model model) {
+        if (validateSeller.existsByUsername(seller.getUsername())) {
+            model.addAttribute("error", "User with this login already exists");
+            return "LoginView";
+        }
         seller.setActive(true);
         seller.setRole("USER");
         seller.setPassword(passwordEncoder.encode(seller.getPassword()));

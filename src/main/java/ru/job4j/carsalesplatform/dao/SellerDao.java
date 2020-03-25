@@ -6,4 +6,6 @@ import ru.job4j.carsalesplatform.model.Seller;
 public interface SellerDao  extends CrudRepository<Seller, Integer> {
 
     Seller findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }

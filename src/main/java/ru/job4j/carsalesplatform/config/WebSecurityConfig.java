@@ -19,13 +19,15 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    DataSource dataSource;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         auth
                 .jdbcAuthentication()
-                .dataSource(getDataSource())
+                .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("select username, password, active from seller where username=?")
                 .authoritiesByUsernameQuery("select username, role from seller where username=?");
@@ -58,13 +60,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12);
     }
 
-    public DataSource getDataSource() {
+   /* public DataSource getDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url("jdbc:postgresql://localhost:5432/postgres");
-        dataSourceBuilder.username("postgres");
-        dataSourceBuilder.password("password");
+        dataSourceBuilder.url("${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/postgres}");
+        dataSourceBuilder.username("${JDBC_DATABASE_USERNAME:postgres}");
+        dataSourceBuilder.password("JDBC_DATABASE_PASSWORD:password");
         return dataSourceBuilder.build();
-    }
+    }*/
 
 }

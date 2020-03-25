@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.job4j.carsalesplatform.model.Seller;
 import ru.job4j.carsalesplatform.service.ValidateSeller;
 
+import javax.sql.DataSource;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,6 +34,9 @@ public class AddSellerControllerTest {
     private ValidateSeller validateSeller;
     @MockBean
     PasswordEncoder encoder;
+    @MockBean
+    DataSource dataSource;
+
 
     @Test
     @WithMockUser(username = "user", roles = "USER")

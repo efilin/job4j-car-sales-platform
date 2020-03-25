@@ -47,4 +47,9 @@ public class ValidateSellerImpl implements ValidateSeller {
     public Seller findSellerByLogin(String username) {
         return sellerDao.findByUsername(username);
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return sellerDao.existsByUsername(username);
+    }
 }

@@ -9,6 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.job4j.carsalesplatform.service.ValidateSeller;
+
+import javax.sql.DataSource;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -22,6 +25,8 @@ public class RegistrationControllerTest {
 
     @MockBean
     ValidateSeller validateSeller;
+    @MockBean
+    DataSource dataSource;
 
     @Test
     public void whenGetLoginThenViewPage() throws Exception {

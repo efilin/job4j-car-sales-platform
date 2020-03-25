@@ -14,6 +14,7 @@ import ru.job4j.carsalesplatform.model.Seller;
 import ru.job4j.carsalesplatform.model.SellingCar;
 import ru.job4j.carsalesplatform.service.ValidateSellingCar;
 
+import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -32,6 +33,9 @@ public class CarListControllerTest {
 
     @MockBean
     private ValidateSellingCar validateSellingCar;
+    @MockBean
+    DataSource dataSource;
+
 
     @Test
     @WithMockUser(username = "user", roles = "USER")

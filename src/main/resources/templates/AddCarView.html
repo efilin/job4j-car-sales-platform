@@ -17,11 +17,19 @@
         }
 
         function validate() {
-            var result = false;
+            let result = false;
+            const numbersRegexp = new RegExp('^[0-9]+$');
+            const yearsRegexp = new RegExp('(19[789]\\d|20[01]\\d|20[2][0])');
             if (!$('#manufacturer').val()) {
                 alert($('#manufacturer').attr('title'));
             } else if (!$('#model').val()) {
                 alert($('#model').attr('title'));
+            } else if (!$('#mileage').val() || !numbersRegexp.test($('#mileage').val())) {
+                alert($('#mileage').attr('title'));
+            } else if (!$('#price').val() || !numbersRegexp.test($('#price').val())) {
+                alert($('#price').attr('title'));
+            } else if (!$('#productionYear').val() || !yearsRegexp.test($('#productionYear').val())) {
+                alert($('#productionYear').attr('title'));
             } else {
                 result = true;
             }
@@ -53,19 +61,22 @@
         <div class="form-group">
             <div class="col-md-3">
                 <label for="mileage">Пробег, км</label>
-                <input type="text" class="form-control" name="mileage" title="Введите пробег машины" id="mileage">
+                <input type="text" class="form-control" name="mileage" pattern="^[0-9]+$" title="Введите пробег машины"
+                       id="mileage">
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-3">
                 <label for="price">Цена машины:</label>
-                <input type="text" class="form-control" name="price" title="Введите цену машины" id="price">
+                <input type="text" class="form-control" name="price" pattern="^[0-9]+$" title="Введите цену машины"
+                       id="price">
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-3">
                 <label for="productionYear">Год выпуска машины:</label>
-                <input type="text" class="form-control" name="productionYear" title="Введите год выпуска машины"
+                <input type="text" class="form-control" name="productionYear" pattern="(19[789]\d|20[01]\d|20[2][0])"
+                       title="Введите год выпуска машины"
                        id="productionYear">
             </div>
         </div>

@@ -16,4 +16,6 @@ public interface ValidateSeller {
     Seller findSellerById(int id);
 
     Seller findSellerByLogin(String login);
+
+    boolean existsByUsername(String username);
 }

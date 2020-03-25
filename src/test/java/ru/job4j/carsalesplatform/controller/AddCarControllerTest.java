@@ -13,6 +13,9 @@ import ru.job4j.carsalesplatform.model.Seller;
 import ru.job4j.carsalesplatform.model.SellingCar;
 import ru.job4j.carsalesplatform.service.ValidateSeller;
 import ru.job4j.carsalesplatform.service.ValidateSellingCar;
+
+import javax.sql.DataSource;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,9 +32,11 @@ public class AddCarControllerTest {
 
     @MockBean
     private ValidateSellingCar validateSellingCar;
-
     @MockBean
     private ValidateSeller validateSeller;
+    @MockBean
+    DataSource dataSource;
+
 
     @Test
     @WithMockUser(username = "user", roles = "USER")
