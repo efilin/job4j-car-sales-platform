@@ -41,7 +41,7 @@ public class AddCarController {
                          @ModelAttribute("car") SellingCar car,
                          Authentication authentication) throws IOException {
 
-        if (photoFile != null && !photoFile.isEmpty()) {
+        if (/*photoFile != null && */!photoFile.isEmpty()) {
             String uploadString = System.getProperty("java.io.tmpdir") + File.separator + "photo";
             String extension = FilenameUtils.getExtension(photoFile.getOriginalFilename());
             String fileName = String.format("photo-%s.%s", String.valueOf(System.currentTimeMillis()), extension);
